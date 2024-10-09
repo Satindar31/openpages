@@ -150,7 +150,7 @@ export default function Component() {
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Pricing that Fits Your Needs</h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Choose the plan that works best for you, whether you're an individual blogger or a growing team.
+                Choose the plan that works best for you, whether you&apos;re an individual blogger or a growing team.
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
