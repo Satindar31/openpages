@@ -3,6 +3,9 @@
 import { Manrope } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+
+import { Toaster } from "@/components/ui/sonner"
 
 const fontHeading = Manrope({
   subsets: ["latin"],
@@ -22,12 +25,15 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={cn("antialiased", fontHeading.variable, fontBody.variable)}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={cn("", fontHeading.variable, fontBody.variable)}
+        >
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
