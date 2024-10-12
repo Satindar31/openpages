@@ -7,6 +7,9 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 import { Toaster } from "@/components/ui/sonner"
 
+
+import Analytics from "@/components/analytics";
+
 const fontHeading = Manrope({
   subsets: ["latin"],
   display: "swap",
@@ -32,6 +35,7 @@ export default function Layout({
         >
           {children}
           <Toaster />
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>

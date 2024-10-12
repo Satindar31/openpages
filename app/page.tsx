@@ -4,12 +4,9 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { SVGProps } from "react";
 import {
-  RedirectToSignUp,
   SignedIn,
   SignedOut,
-  SignIn,
   SignInButton,
-  SignUp,
   SignUpButton,
 } from "@clerk/nextjs";
 
@@ -59,14 +56,14 @@ export default function Component() {
                 className="hidden rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:inline-flex"
                 prefetch={false}
               >
-                <SignInButton>Sign In</SignInButton>
+                <SignInButton mode="modal">Sign In</SignInButton>
               </Link>
               <Link
                 href="#"
                 className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 prefetch={false}
               >
-                <SignUpButton>Get Started</SignUpButton>
+                <SignUpButton mode="modal">Get Started</SignUpButton>
               </Link>
             </SignedOut>
             <SignedIn>
@@ -94,20 +91,39 @@ export default function Component() {
                 content with the world.
               </p>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link
-                  href="#"
-                  className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                  prefetch={false}
-                >
-                  Get Started
-                </Link>
-                <Link
-                  href="#"
-                  className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                  prefetch={false}
-                >
-                  Learn More
-                </Link>
+                <SignedOut>
+                  <Link
+                    href="#"
+                    className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    prefetch={false}
+                  >
+                    Get Started
+                    <SignUpButton mode="modal" />
+                  </Link>
+                  <Link
+                    href="/dashboard"
+                    className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    prefetch={false}
+                  >
+                    Learn More
+                  </Link>
+                </SignedOut>
+                <SignedIn>
+                  <Link
+                    href="#"
+                    className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    prefetch={false}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="#"
+                    className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    prefetch={false}
+                  >
+                    Learn More
+                  </Link>
+                </SignedIn>
               </div>
             </div>
             <Image
