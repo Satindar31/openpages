@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner"
 
 
 import Analytics from "@/components/analytics";
+import Script from "next/script";
 
 const fontHeading = Manrope({
   subsets: ["latin"],
@@ -36,6 +37,8 @@ export default function Layout({
           {children}
           <Toaster />
           <Analytics />
+
+  <Script id="hs-script-loader" strategy="afterInteractive" defer src={`//js-na1.hs-scripts.com/${process.env.HUBSPOT_NUMBER}.js`}/>
         </body>
       </html>
     </ClerkProvider>
