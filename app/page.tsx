@@ -8,6 +8,7 @@ import {
   SignedOut,
   SignInButton,
   SignUpButton,
+  UserButton,
 } from "@clerk/nextjs";
 
 export default function Component() {
@@ -74,6 +75,7 @@ export default function Component() {
               >
                 Dashboard
               </Link>
+              <UserButton />
             </SignedIn>
           </div>
         </div>
@@ -97,7 +99,6 @@ export default function Component() {
                     className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                     prefetch={false}
                   >
-                    Get Started
                     <SignUpButton mode="modal" />
                   </Link>
                   <Link
