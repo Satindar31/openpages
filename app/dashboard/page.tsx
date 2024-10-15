@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default async function Dashboard() {
   const response = await fetch(
-    "http://localhost:3000/api/article/draft?userID=" + auth().userId,
+    process.env.BASE_URL + "/api/article/draft?userID=" + auth().userId,
     {
       next: {
-        revalidate: 0,
+        revalidate: 10,
       },
       method: "GET",
     }

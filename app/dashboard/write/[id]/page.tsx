@@ -11,10 +11,10 @@ export default async function Writepage({
 }) {
   const { userId } = auth()
   const response = await fetch(
-    `http://localhost:3000/api/article/draft/getDraft?userID=${userId}&draftID=${params.id}`,
+    `${process.env.BASE_URL}/api/article/draft/getDraft?userID=${userId}&draftID=${params.id}`,
     {
       next: {
-        revalidate: 0,
+        revalidate: 10,
       },
       method: "GET",
     }
