@@ -73,7 +73,7 @@ export default function Component() {
                 className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 prefetch={true}
               >
-                Dashboard
+                Start writing
               </Link>
               <UserButton />
             </SignedIn>
@@ -111,7 +111,7 @@ export default function Component() {
                 </SignedOut>
                 <SignedIn>
                   <Link
-                    href="#"
+                    href="/dashboard"
                     className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                     prefetch={false}
                   >

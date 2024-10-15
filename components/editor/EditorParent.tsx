@@ -1,20 +1,42 @@
-"use client";
+"use client"
 
-import Editor from "@/components/editor/advanced-editor";
 import { JSONContent } from "novel";
-import { useState } from "react";
-import { toast } from "sonner";
+import EditorComp from "./advanced-editor";
 import { useDebouncedCallback } from "use-debounce";
+import { toast } from "sonner";
 
-export default function WriteArticlePage() {
-  const [content, setContent] = useState<string | undefined>(undefined);
-
-  const [draftID, setDraftID] = useState("");
-
+export default function Editor({initialValue, draftID}: {initialValue: JSONContent[], draftID: string}) {
+  
   const debouncedUpdates = useDebouncedCallback(
+    async (editor: JSONContent | undefined) => {
+      const json = editor;
+
+      fetch("/api/article/draft/save", {
+        method: "PUT",
+        body: JSON.stringify({
+          content: json,
+          id: draftID
+        })
+      }).then((res) => {
+        if (res.status === 201) {
+          console.log("Saved");
+          toast.success("Saved");
+        } else {
+          console.error("Failed to save");
+          toast.error("Failed to save");
+        }
+      });
+    }
+  ,1000)
+
+  return <EditorComp initialValue={initialValue} onChange={e => debouncedUpdates(e)}/>;
+}
+
+/*
+const debouncedUpdates = useDebouncedCallback(
     async (editor: JSONContent[] | undefined) => {
       const json = editor;
-      setContent(Buffer.from(JSON.stringify(json)).toString("utf-8"));
+      setContent(Buffer.from(JSON.stringify(json)).toString("base64"));
       if (draftID !== "" || draftID !== undefined) {
         console.log(draftID)
         fetch("/api/article/draft/save", {
@@ -65,10 +87,4 @@ export default function WriteArticlePage() {
     },
     1000
   );
-
-  return (
-    <div className="prose md:prose-xl">
-      <Editor onChange={(e) => debouncedUpdates(e.content)} />
-    </div>
-  );
-}
+  */

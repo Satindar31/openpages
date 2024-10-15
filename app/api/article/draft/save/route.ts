@@ -1,10 +1,10 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { PrismaClient } from "@prisma/client";
+import { JSONContent } from "novel";
 const prisma = new PrismaClient();
 
 export async function PUT(req: Request) {
-  const { content, id } = await req.json();
-
+  const { content, id }: { content: string, id: string } = await req.json();
   if (!content) {
     return new Response("Invalid content", { status: 400 });
   }
@@ -53,7 +53,7 @@ export async function PUT(req: Request) {
         id: id,
       },
       data: {
-        content: content,
+        content: JSON.stringify(content),
         title: "Draft",
         author: {
           connectOrCreate: {
@@ -69,7 +69,6 @@ export async function PUT(req: Request) {
         published: false,
       },
     });
-    console.log(draft.id);
     return new Response(
       JSON.stringify({
         id: draft.id,
