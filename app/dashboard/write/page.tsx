@@ -1,6 +1,7 @@
 "use client";
 
 import Editor from "@/components/editor/advanced-editor";
+import SettingsDrawer from "@/components/write/settings";
 import { JSONContent } from "novel";
 import { useState } from "react";
 import { toast } from "sonner";

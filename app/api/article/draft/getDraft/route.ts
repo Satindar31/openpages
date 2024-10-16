@@ -26,6 +26,7 @@ export async function GET(req: Request) {
                 id: true,
                 title: true,
                 content: true,
+                published: true,
             },
         });
 

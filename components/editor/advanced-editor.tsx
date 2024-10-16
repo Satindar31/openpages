@@ -37,7 +37,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
   return (
     <EditorRoot>
       <EditorContent
-        className="border p-4 rounded-xl"
+        className="border p-4 rounded-xl h-screen"
         {...(initialValue && { initialContent: initialValue })}
         extensions={extensions}
         editorProps={{
