@@ -1,0 +1,30 @@
+Contributor License Agreement (CLA) Effective Date: 19 October, 2024
+
+Thank you for your interest in contributing to the OpenPages ("Project"), which is licensed under the Apache License 2.0 ("Apache 2.0"). By making a contribution to this Project, you agree to the following terms and conditions for your present and future contributions submitted to OpenPages ("Project Maintainer").
+
+# 1. Definitions
+“You” (or “Your”): This refers to the individual or entity making the contribution.
+“Contribution”: Any original work of authorship, including any modifications or additions to an existing work, that is intentionally submitted by You to the Project. Contributions include, but are not limited to, code, documentation, or other materials.
+“Project”: The software, documentation, and other related content maintained under the repository located at https://github.com/satindar31/openpages.
+# 2. License Grant
+You hereby grant to the Project Maintainer, and to recipients of software distributed by the Project Maintainer, a perpetual, worldwide, non-exclusive, royalty-free, irrevocable license under the Apache 2.0 License to use, reproduce, prepare derivative works of, publicly display, publicly perform, sublicense, and distribute Your contributions and any derivative works created based on Your contributions.
+
+# 3. Originality and Rights
+You represent that:
+
+Each of Your contributions is an original work and that You have the necessary rights to grant the above license.
+Your contributions are not subject to any third-party licenses that would require the Project Maintainer or recipients of the software to comply with any additional terms.
+If Your employer(s) have rights to intellectual property that You create, You represent that You have received permission to make contributions on behalf of that employer, or that Your employer has waived such rights for Your contributions.
+# 4. Patents
+You grant the Project Maintainer and its users a perpetual, worldwide, non-exclusive, royalty-free, irrevocable license under any patent claims that are essential to Your contributions to the Project. This applies only to those patent claims that You can grant without violating the terms of any existing agreements You have.
+
+# 5. Attribution
+The Project Maintainer may attribute the Contribution to You by mentioning Your name, username, or company name in any appropriate form, including but not limited to, the software’s documentation or website.
+
+# 6. No Obligation
+The Project Maintainer is under no obligation to use or include Your contributions in the Project. Contributions may be accepted, rejected, or modified at the discretion of the Project Maintainer.
+
+# 7. Miscellaneous
+Governing Law: This agreement shall be governed by and construed in accordance with the laws of India.
+Entire Agreement: This CLA constitutes the entire agreement between the parties concerning the subject matter of this document, superseding all prior agreements and understandings.
+By signing below or by submitting a pull request to the Project, You agree to be bound by the terms of this Contributor License Agreement.
