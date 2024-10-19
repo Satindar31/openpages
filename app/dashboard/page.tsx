@@ -5,7 +5,6 @@ import Link from "next/link";
 export default async function Dashboard() {
   const { orgId, userId } = auth();
 
-  console.log(orgId);
   if (!orgId || orgId == undefined) {
     return (
       <div className="flex items-center justify-center">

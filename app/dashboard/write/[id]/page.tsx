@@ -24,7 +24,6 @@ export default async function Writepage({
   );
   if (!response.ok) {
     console.log("Error fetching draft");
-    console.log(response);
     return (
       <div>
         <h1>Error fetching draft</h1>

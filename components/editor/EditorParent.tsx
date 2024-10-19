@@ -19,7 +19,6 @@ export default function Editor({initialValue, draftID}: {initialValue: JSONConte
         })
       }).then((res) => {
         if (res.status === 201) {
-          console.log("Saved");
           toast.success("Saved");
         } else {
           console.error("Failed to save");

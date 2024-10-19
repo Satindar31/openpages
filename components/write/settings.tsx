@@ -33,7 +33,6 @@ export default function SettingsDrawer({
     }).then((res) => {
       if (res.status === 201) {
         toast.success("Saved");
-        console.log("Saved");
       } else {
         toast.error("Failed to save");
         console.error("Failed to save");
