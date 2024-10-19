@@ -1,6 +1,8 @@
 import { OrganizationList, OrganizationSwitcher } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default async function Dashboard() {
   const { orgId, userId } = auth();
@@ -14,6 +16,7 @@ export default async function Dashboard() {
   }
 
   if (orgId) {
+    // For drafts
     const response = await fetch(
       process.env.BASE_URL +
         `/api/article/draft?userID=${userId}&orgID=${orgId}`,
@@ -34,6 +37,24 @@ export default async function Dashboard() {
 
     const drafts = await response.json();
 
+    const response2 = await fetch(
+      process.env.BASE_URL +
+        `/api/article/published?userID=${userId}&orgID=${orgId}`,
+      {
+        next: {
+          revalidate: 0,
+        },
+        headers: {
+          Authorization: "Bearer " + (await auth().getToken()),
+        },
+        method: "GET",
+      }
+    );
+    if (!response2.ok) {
+      console.log("Error fetching published articles");
+    }
+    const published = await response2.json();
+
     return (
       <div>
         <h1 className="text-4xl md:text-9xl font-black">Dashboard</h1>
@@ -49,17 +70,39 @@ export default async function Dashboard() {
         </Link>
 
         <p>drafts:</p>
+
         <ul>
-          {drafts.length > 0 &&
-            drafts.map(
-              (draft: { id: string; title: string; updatedAt: string }) => (
-                <li key={draft.id}>
-                  <Link href={"/dashboard/write/" + draft.id}>{draft.id}</Link>,
-                  title: {draft.title}, updated:{" "}
-                  {new Date(draft.updatedAt).toLocaleString()}
-                </li>
-              )
-            )}
+          <Suspense fallback={<Loading />}>
+            {drafts.length > 0 &&
+              drafts.map(
+                (draft: { id: string; title: string; updatedAt: string }) => (
+                  <li key={draft.id}>
+                    <Link href={"/dashboard/write/" + draft.id}>
+                      {draft.id}
+                    </Link>
+                    , title: {draft.title}, updated:{" "}
+                    {new Date(draft.updatedAt).toLocaleString()}
+                  </li>
+                )
+              )}
+          </Suspense>
+        </ul>
+        <p>Published:</p>
+        <ul>
+          <Suspense fallback={<Loading />}>
+            {published.length > 0 &&
+              published.map(
+                (article: { id: string; title: string; updatedAt: string }) => (
+                  <li key={article.id}>
+                    <Link href={"/dashboard/write/" + article.id}>
+                      {article.id}
+                    </Link>
+                    , title: {article.title}, updated:{" "}
+                    {new Date(article.updatedAt).toLocaleString()}
+                  </li>
+                )
+              )}
+          </Suspense>
         </ul>
       </div>
     );
