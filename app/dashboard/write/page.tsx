@@ -17,26 +17,56 @@ export default function WriteArticlePage() {
       const json = editor;
       setContent(Buffer.from(JSON.stringify(json)).toString("utf-8"));
       if (draftID !== "" || draftID !== undefined) {
-        console.log(draftID)
+        console.log(draftID);
         fetch("/api/article/draft/save", {
           method: "PUT",
           body: JSON.stringify({
             content: content,
             id: draftID,
           }),
-          cache: "no-cache"
+          cache: "no-cache",
         }).then((res) => {
           if (res.status === 201) {
             console.log("Saved(not first)");
-            
+
             toast.success("Saved");
             res.json().then((data) => {
-                console.log(data);
-                setDraftID(data.id);
-            })
+              console.log(data);
+              setDraftID(data.id);
+            });
           } else {
             console.error("Failed to save");
-            toast.error("Failed to save");
+            toast.error("Failed to save", {
+              action: (
+                <button
+                  onClick={() => {
+                    fetch("/api/article/draft/save", {
+                      method: "PUT",
+                      body: JSON.stringify({
+                        content: content,
+                        id: draftID,
+                      }),
+                      cache: "no-cache",
+                    }).then((res) => {
+                      if (res.status === 201) {
+                        console.log("Saved(not first)");
+
+                        toast.success("Saved");
+                        res.json().then((data) => {
+                          console.log(data);
+                          setDraftID(data.id);
+                        });
+                      } else {
+                        console.error("Failed to save");
+                        toast.error("Failed to save");
+                      }
+                    });
+                  }}
+                >
+                  Retry
+                </button>
+              ),
+            });
           }
         });
       } else {
@@ -45,13 +75,13 @@ export default function WriteArticlePage() {
           body: JSON.stringify({
             content: content,
           }),
-          cache: "no-cache"
+          cache: "no-cache",
         }).then((res) => {
           if (res.status === 201) {
             console.log("Saved (first save)");
             // get json body
             res.json().then((data) => {
-                console.log(data);
+              console.log(data);
               setDraftID(data.id);
             });
             // console log text body

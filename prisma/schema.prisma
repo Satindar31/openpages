@@ -14,11 +14,13 @@ datasource db {
 }
 
 model User {
-  id       String   @id
+  id        String   @id
   name      String?
   posts     Post[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Publication Publication[]
 }
 
 model Post {
@@ -28,6 +30,22 @@ model Post {
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Publication Publication[]
+}
+
+model Publication {
+  id             String  @id @default(cuid())
+  name           String
+  slug           String  @unique
+  articles       Post[]
+  published      Boolean @default(false)
+  domain         String  @unique @default("example.com")
+  domainVerified Boolean @default(false)
+  members        User[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

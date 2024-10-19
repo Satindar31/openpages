@@ -14,13 +14,17 @@ export default async function Writepage({
     `${process.env.BASE_URL}/api/article/draft/getDraft?userID=${userId}&draftID=${params.id}`,
     {
       next: {
-        revalidate: 10,
+        revalidate: 0,
       },
       method: "GET",
+      headers: {
+        Authorization: "Bearer " + (await auth().getToken()),
+      },
     }
   );
   if (!response.ok) {
     console.log("Error fetching draft");
+    console.log(response);
     return (
       <div>
         <h1>Error fetching draft</h1>

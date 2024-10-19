@@ -3,7 +3,7 @@
 import { Manrope } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 
 import { Toaster } from "@/components/ui/sonner"
 
@@ -31,6 +31,7 @@ export default function Layout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <GoogleOneTap />
         <body
           className={cn("", fontHeading.variable, fontBody.variable)}
         >
