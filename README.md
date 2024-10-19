@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+[![CLA assistant](https://cla-assistant.io/readme/badge/Satindar31/openpages)](https://cla-assistant.io/Satindar31/openpages)
 
 ## Getting Started
 First, install the dependencies:
