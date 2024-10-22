@@ -22,7 +22,7 @@ export async function PUT(req: Request) {
       try {
         const draft = await prisma.post.create({
           data: {
-            content: content,
+            content: JSON.stringify(content),
             title: "Draft",
             author: {
               connectOrCreate: {

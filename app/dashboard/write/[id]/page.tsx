@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import Loading from "./loading";
 import { auth } from "@clerk/nextjs/server";
-import Editor from "@/components/editor/EditorParent";
 import SettingsDrawer from "@/components/write/settings";
+import EditorChild from "@/components/editor/editorChild";
 
 export default async function Writepage({
   params,
@@ -32,6 +32,8 @@ export default async function Writepage({
     );
   }
   const res = await response.json();
+  console.log(res.content);
+  
 
   return (
     <Suspense fallback={<Loading />}>
@@ -41,7 +43,7 @@ export default async function Writepage({
         <SettingsDrawer id={res.id} docTitle={res.title} docPublished={res.published} />
         <p>id: {res.id}</p>
         <p>title: {res.title}</p>
-        <Editor draftID={res.id} initialValue={res.content} />
+        <EditorChild APIURL={`${process.env.BASE_URL}/api/article/draft/save`} _id={res.id} initValue={res.content} />
       </div>
     </Suspense>
   );
