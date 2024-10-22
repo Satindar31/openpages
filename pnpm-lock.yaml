@@ -56,6 +56,9 @@ importers:
       '@yoopta/embed':
         specifier: ^4.8.4
         version: 4.8.4(@yoopta/editor@4.8.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-react@0.110.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.110.2))(slate@0.110.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@yoopta/exports':
+        specifier: ^4.8.4
+        version: 4.8.4(@yoopta/editor@4.8.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-react@0.110.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.110.2))(slate@0.110.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@yoopta/file':
         specifier: ^4.8.4
         version: 4.8.4(@yoopta/editor@4.8.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-react@0.110.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.110.2))(slate@0.110.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1567,6 +1570,13 @@ packages:
       react: '>=17.0.2'
       react-dom: '>=17.0.2'
 
+  '@yoopta/exports@4.8.4':
+    resolution: {integrity: sha512-TVD/8ENibuwyVFOGrqsq+N6dNGfCu2gqhYq1VL9kRvmWxsInL0IsRHs/bqcSWFRjMmmley6jBZtCpQxFrlIGwA==}
+    peerDependencies:
+      '@yoopta/editor': '>=4.0.0'
+      react: '>=17.0.2'
+      react-dom: '>=17.0.2'
+
   '@yoopta/file@4.8.4':
     resolution: {integrity: sha512-X60+3lAFONOslrxHstme4Vmo93BoLxLexMf9TShoZEMM5gAkPQaARWVMSgOrwJMAkF4t0H6VKWrNHRZtpLQbZw==}
     peerDependencies:
@@ -2632,6 +2642,11 @@ packages:
 
   markdown-it@14.1.0:
     resolution: {integrity: sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==}
+    hasBin: true
+
+  marked@13.0.3:
+    resolution: {integrity: sha512-rqRix3/TWzE9rIoFGIn8JmsVfhiuC8VIQ8IdX5TfzmeBucdY05/0UlzKaw0eVtpcN/OdVFpBk7CjKGo9iHJ/zA==}
+    engines: {node: '>= 18'}
     hasBin: true
 
   mdast-util-definitions@5.1.2:
@@ -5327,6 +5342,13 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@yoopta/exports@4.8.4(@yoopta/editor@4.8.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-react@0.110.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.110.2))(slate@0.110.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@yoopta/editor': 4.8.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-react@0.110.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.110.2))(slate@0.110.2)
+      marked: 13.0.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@yoopta/file@4.8.4(@yoopta/editor@4.8.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-react@0.110.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.110.2))(slate@0.110.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/react': 0.26.25(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6564,6 +6586,8 @@ snapshots:
       mdurl: 2.0.0
       punycode.js: 2.3.1
       uc.micro: 2.1.0
+
+  marked@13.0.3: {}
 
   mdast-util-definitions@5.1.2:
     dependencies:

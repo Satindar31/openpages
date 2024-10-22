@@ -5,6 +5,8 @@ import YooptaEditor, {
   YooptaContentValue,
 } from "@yoopta/editor";
 
+import { markdown } from '@yoopta/exports';
+
 import Paragraph from "@yoopta/paragraph";
 import Blockquote from "@yoopta/blockquote";
 import Embed from "@yoopta/embed";
@@ -136,15 +138,25 @@ function EditorChild({
   const [id, setID] = useState<string | null>(_id);
   const selectionRef = useRef(null);
 
+  const serializeMarkdown = () => {
+    const data = editor.getEditorValue();
+    const markdownString = markdown.serialize(editor, data);
+
+    return markdownString;
+  };
+
   const debounced = useDebouncedCallback(
     // function
     (value: YooptaContentValue) => {
       console.log(id);
+      const mdString = serializeMarkdown()
+      console.log(mdString)
     if (id == null) {
       fetch(APIURL, {
         method: "PUT",
         body: JSON.stringify({
           content: value,
+          md: mdString,
         }),
       }).then((res) => {
         if (res.ok) {
@@ -162,7 +174,8 @@ function EditorChild({
         method: "PUT",
         body: JSON.stringify({
           content: value,
-          id: id
+          id: id,
+          md: mdString,
         }),
       }).then((res) => {
         if (res.ok) {

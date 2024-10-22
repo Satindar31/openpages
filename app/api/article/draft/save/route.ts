@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function PUT(req: Request) {
-  const { content, id }: { content: string; id: string } = await req.json();
+  const { content, id, md }: { content: string; id: string , md: string} = await req.json();
   if (!content) {
     return new Response("Invalid content", { status: 400 });
   }
@@ -23,6 +23,7 @@ export async function PUT(req: Request) {
         const draft = await prisma.post.create({
           data: {
             content: JSON.stringify(content),
+            contentMD: md,
             title: "Draft",
             author: {
               connectOrCreate: {
@@ -76,6 +77,7 @@ export async function PUT(req: Request) {
           },
           data: {
             content: JSON.stringify(content),
+            contentMD: md,
             title: "Draft",
             author: {
               connectOrCreate: {
