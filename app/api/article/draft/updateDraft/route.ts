@@ -1,6 +1,14 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+
+import { Pool, neonConfig } from '@neondatabase/serverless'
+import { PrismaNeon } from '@prisma/adapter-neon'
+import { PrismaClient } from '@prisma/client'
+
+const connectionString = `${process.env.DATABASE_URL}`
+
+const pool = new Pool({ connectionString })
+const adapter = new PrismaNeon(pool)
+const prisma = new PrismaClient({ adapter })
 
 export async function PUT(req: Request) {
   const { title, id, description, published }: { title: string, id: string, description: string, published: boolean } = await req.json();
