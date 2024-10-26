@@ -17,33 +17,36 @@ export default clerkMiddleware(
     }
 
     const { hostname } = request.nextUrl;
-    const baseDomain = process.env.BASE_DOMAIN ?? "localhost:3000";
+    const baseDomain = process.env.BASE_DOMAIN ?? "localhost";
 
-    console.log(`hostname: ${hostname}`);
-    if (hostname.endsWith(baseDomain)) {
-      console.log(`hostname: ${hostname}`);
-      const subdomain = hostname.replace(`.${baseDomain}`, "");
-      console.log(`Subdomain: ${subdomain}`);
-      const blog = await findBlogByDomain(subdomain, false);
-      if (blog) {
-        console.log("blog found");
-        request.nextUrl.pathname = `/blog/${blog.id}`;
-        return NextResponse.rewrite(request.nextUrl);
-      }
-      console.log("no blog found");
-      return NextResponse.rewrite(new URL("/404", request.url));
-    } else {
-      // Handle custom domains like: example.com
-      const blog = await findBlogByDomain(hostname, true);
-      if (blog) {
-        // Rewrite to the blog's dynamic route (e.g., `/blog/[id]`)
-        request.nextUrl.pathname = `/blog/${blog.id}`; // Adjust this to your routing
-        return NextResponse.rewrite(request.nextUrl);
-      }
-
-      // If no matching blog or domain, allow default behavior or return a 404
-      console.log("no blog found");
+    if (hostname == baseDomain) {
       return NextResponse.next();
+    } else {
+      if (hostname.endsWith(baseDomain)) {
+        console.log(`hostname: ${hostname}`);
+        const subdomain = hostname.replace(`.${baseDomain}`, "");
+        console.log(`Subdomain: ${subdomain}`);
+        const blog = await findBlogByDomain(subdomain, false);
+        if (blog) {
+          console.log("blog found");
+          request.nextUrl.pathname = `/blog/${blog.id}`;
+          return NextResponse.rewrite(request.nextUrl);
+        }
+        console.log("no blog found");
+        return NextResponse.rewrite(new URL("/404", request.url));
+      } else {
+        // Handle custom domains like: example.com
+        const blog = await findBlogByDomain(hostname, true);
+        if (blog) {
+          // Rewrite to the blog's dynamic route (e.g., `/blog/[id]`)
+          request.nextUrl.pathname = `/blog/${blog.id}`; // Adjust this to your routing
+          return NextResponse.rewrite(request.nextUrl);
+        }
+
+        // If no matching blog or domain, allow default behavior or return a 404
+        console.log("no blog found");
+        return NextResponse.next();
+      }
     }
   },
   {
