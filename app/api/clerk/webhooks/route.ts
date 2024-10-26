@@ -2,15 +2,8 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { currentUser, WebhookEvent } from "@clerk/nextjs/server";
 
-import { Pool, neonConfig } from '@neondatabase/serverless'
-import { PrismaNeon } from '@prisma/adapter-neon'
-import { PrismaClient } from '@prisma/client'
-
-const connectionString = `${process.env.DATABASE_URL}`
-
-const pool = new Pool({ connectionString })
-const adapter = new PrismaNeon(pool)
-const prisma = new PrismaClient({ adapter })
+import { PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient()
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
