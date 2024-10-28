@@ -87,7 +87,9 @@ export default async function Dashboard() {
               )}
           </Suspense>
         </ul>
-        <p>Published:</p>
+        {published.length > 0 ? (
+          <p>Published:</p>
+        ) : <></>}
         <ul>
           <Suspense fallback={<Loading />}>
             {published.length > 0 &&

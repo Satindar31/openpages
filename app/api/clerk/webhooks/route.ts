@@ -2,8 +2,11 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { currentUser, WebhookEvent } from "@clerk/nextjs/server";
 
-import { PrismaClient } from "@prisma/client"
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+import defaultContent from "@/lib/defaultContent";
+const prisma = new PrismaClient();
+
+
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -37,8 +40,6 @@ export async function POST(req: Request) {
 
   let evt: WebhookEvent;
 
-  const user = await currentUser();
-
   // Verify the payload with the headers
   try {
     evt = wh.verify(body, {
@@ -56,49 +57,38 @@ export async function POST(req: Request) {
   console.log("Event type:", evt.type);
   if (evt.type === "organization.created") {
     try {
-      // Create a new publication in the database
-      await prisma.user.update({
-        where: {
-          id: payload.data.created_by,
-        },
+      await prisma.publication.create({
         data: {
-          Publication: {
-            create: {
-              name: payload.data.name,
-              slug: payload.data.slug,
-              domain: `${payload.data.slug}.openpages.us.kg`,
-              domainVerified: true,
-              published: true,
-              id: payload.data.id,
-
-              articles: {
-                create: {
-                  title: "Welcome to OpenPages",
-                  content:
-                    "This is your first article. You can edit this article in the dashboard.",
-                  published: false,
-                  author: {
-                    connectOrCreate: {
-                      where: {
-                        id: payload.data.created_by,
-                      },
-                      create: {
-                        id: payload.data.created_by,
-                        name: "Satindar",
-                      },
-                    },
-                  },
-                },
-              },
-            },
+          id: payload.data.id,
+          name: payload.data.name,
+          slug: payload.data.slug,
+          members: {
+            connect: {
+              id: payload.data.created_by
+            }
           },
-        },
-      });
+          articles: {
+            create: {
+              title: "Welcome to " + process.env.APP_NAME,
+              author: {
+                connect: {
+                  id: process.env.SYSADMIN_ID
+                }
+              },
+              content: JSON.stringify(defaultContent),
+              contentMD: "# This is the first article of " + payload.data.name,
+              published: true
+            }
+          },
+          published: true
+        }
+      })
       return new Response("", { status: 200 });
-    } catch (err) {
+    }
+    catch(err) {
       console.error("Error creating publication:", err);
-      return new Response("Error occured", {
-        status: 400,
+      return new Response("Error occured. Error: " + err , {
+        status: 500,
       });
     }
   } else if (evt.type === "organization.deleted") {
@@ -129,6 +119,35 @@ export async function POST(req: Request) {
       return new Response("", { status: 200 });
     } catch (error) {
       console.error("Error updating publication:", error);
+      return new Response("Error occured", {
+        status: 500,
+      });
+    }
+  } else if (evt.type == "user.created") {
+    try {
+      await prisma.user.create({
+        data: {
+          id: payload.data.id,
+          name: payload.data.name,
+        },
+      });
+      return new Response("", { status: 200 });
+    } catch (error) {
+      console.error("Error creating user:", error);
+      return new Response("Error occured", {
+        status: 500,
+      });
+    }
+  } else if (evt.type == "user.deleted") {
+    try {
+      await prisma.user.delete({
+        where: {
+          id: payload.data.id,
+        },
+      });
+      return new Response("", { status: 200 });
+    } catch (error) {
+      console.error("Error deleting user:", error);
       return new Response("Error occured", {
         status: 500,
       });

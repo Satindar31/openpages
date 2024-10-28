@@ -5,7 +5,7 @@ import YooptaEditor, {
   YooptaContentValue,
 } from "@yoopta/editor";
 
-import { markdown } from '@yoopta/exports';
+import { markdown } from "@yoopta/exports";
 
 import Paragraph from "@yoopta/paragraph";
 import Blockquote from "@yoopta/blockquote";
@@ -148,48 +148,45 @@ function EditorChild({
   const debounced = useDebouncedCallback(
     // function
     (value: YooptaContentValue) => {
-      console.log(id);
-      const mdString = serializeMarkdown()
-      console.log(mdString)
-    if (id == null) {
-      fetch(APIURL, {
-        method: "PUT",
-        body: JSON.stringify({
-          content: value,
-          md: mdString,
-        }),
-      }).then((res) => {
-        if (res.ok) {
-          // set id to id from response body
-          res.json().then((data) => {
-            setID(data.id);
-          });
-          toast.success("Article created successfully");
-        } else {
-          toast.error("Error creating article");
-        }
-      });
-    } else if (id !== null) {
-      fetch(APIURL, {
-        method: "PUT",
-        body: JSON.stringify({
-          content: value,
-          id: id,
-          md: mdString,
-        }),
-      }).then((res) => {
-        if (res.ok) {
-          toast.success("Article updated successfully");
-        } else {
-          toast.error("Error updating article");
-        }
-      });
-    }
+      const mdString = serializeMarkdown();
+      if (id == null) {
+        fetch(APIURL, {
+          method: "PUT",
+          body: JSON.stringify({
+            content: value,
+            md: mdString,
+          }),
+        }).then((res) => {
+          if (res.ok) {
+            // set id to id from response body
+            res.json().then((data) => {
+              setID(data.id);
+            });
+            toast.success("Article created successfully");
+          } else {
+            toast.error("Error creating article");
+          }
+        });
+      } else if (id !== null) {
+        fetch(APIURL, {
+          method: "PUT",
+          body: JSON.stringify({
+            content: value,
+            id: id,
+            md: mdString,
+          }),
+        }).then((res) => {
+          if (res.ok) {
+            toast.success("Article updated successfully");
+          } else {
+            toast.error("Error updating article");
+          }
+        });
+      }
     },
     // delay in ms
     1000
   );
-
 
   useEffect(() => {
     editor.on("change", debounced);
@@ -200,11 +197,11 @@ function EditorChild({
   }, [editor]);
 
   return (
-    <div
-      className="md:py-[100px] md:pl-[200px] md:pr-[80px] px-[20px] pt-[80px] pb-[40px] flex justify-center"
-      ref={selectionRef}
-    >
+    <div className="flex justify-center w-screen h-full" ref={selectionRef}>
       <YooptaEditor
+        className="w-full h-full"
+        width={800}
+        placeholder="Start writing here..."
         editor={editor}
         plugins={plugins}
         tools={TOOLS}

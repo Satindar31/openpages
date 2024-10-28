@@ -32,10 +32,10 @@ export default async function Writepage({
     );
   }
   const res = await response.json();
-  console.log(res.content);
   
 
   return (
+    <div className="w-screen h-screen">
     <Suspense fallback={<Loading />}>
       <div className="p-4">
         <h1 className="font-black text-2xl md:text-9xl">Write</h1>
@@ -46,5 +46,6 @@ export default async function Writepage({
         <EditorChild APIURL={`${process.env.BASE_URL}/api/article/draft/save`} _id={res.id} initValue={res.content} />
       </div>
     </Suspense>
+    </div>
   );
 }

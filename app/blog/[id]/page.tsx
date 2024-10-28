@@ -11,7 +11,7 @@ export default async function PublicationPage({ params }: { params: { id: string
     }
     
     return (
-        <div className="">
+        <div className="w-screen h-full">
             <Suspense fallback={ <Loading /> }>
                 <h1>{blog.name}</h1>
                 <h2>{new Date(blog.createdAt).toLocaleDateString()}</h2>
