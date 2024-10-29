@@ -80,7 +80,9 @@ export async function POST(req: Request) {
               published: true
             }
           },
-          published: true
+          published: true,
+          domain: `${payload.data.slug}.${process.env.BASE_URL}`,
+          domainVerified: true
         }
       })
       return new Response("", { status: 200 });

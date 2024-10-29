@@ -46,7 +46,7 @@ export async function PUT(req: Request) {
                 create: {
                   id: (Math.random() * 1000000).toString(),
                   name: "Drafts",
-                  slug: crypto.randomUUID().toString()
+                  slug: crypto.randomUUID().toString(),
                 }
               },
             }

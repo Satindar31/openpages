@@ -27,6 +27,7 @@ model User {
 model Post {
   id        String   @id @default(cuid())
   title     String
+  slug     String   @unique @default(cuid())
   content   String
   contentMD String @default("")
   published Boolean  @default(false)

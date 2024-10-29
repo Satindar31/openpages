@@ -39,11 +39,12 @@ export default async function Dashboard() {
 
     const response2 = await fetch(
       process.env.BASE_URL +
-        `/api/article/published?userID=${userId}&orgID=${orgId}`,
+        '/api/article/published?orgID=' + orgId + '&userID=' + userId,
       {
         next: {
           revalidate: 0,
         },
+        cache: "no-cache",
         headers: {
           Authorization: "Bearer " + (await auth().getToken()),
         },
@@ -87,16 +88,19 @@ export default async function Dashboard() {
               )}
           </Suspense>
         </ul>
-        {published.length > 0 ? (
-          <p>Published:</p>
-        ) : <></>}
+        {published.length > 0 ? <p>Published:</p> : <></>}
         <ul>
           <Suspense fallback={<Loading />}>
             {published.length > 0 &&
               published.map(
-                (article: { id: string; title: string; updatedAt: string }) => (
+                (article: {
+                  slug: string;
+                  id: string;
+                  title: string;
+                  updatedAt: string;
+                }) => (
                   <li key={article.id}>
-                    <Link href={"/dashboard/write/" + article.id}>
+                    <Link href={`/blog/${orgId}/` + article.slug}>
                       {article.id}
                     </Link>
                     , title: {article.title}, updated:{" "}

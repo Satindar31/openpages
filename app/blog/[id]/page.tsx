@@ -13,11 +13,11 @@ export default async function PublicationPage({ params }: { params: { id: string
     return (
         <div className="w-screen h-full">
             <Suspense fallback={ <Loading /> }>
-                <h1>{blog.name}</h1>
-                <h2>{new Date(blog.createdAt).toLocaleDateString()}</h2>
+                <h1 className="text:4xl md:text-9xl">{blog.name}</h1>
+                <h2 className="text:xl md:text-4xl">Created: {new Date(blog.createdAt).toLocaleDateString()}</h2>
                 <ol>
                     {blog.articles.map((article) => (
-                        <li key={article.id}><Link href={`/blog/${id}/${article.id}`}>Title: {article.title} author: {article.author.name}</Link></li>                    
+                        <li key={article.id}><Link href={`/blog/${id}/${article.slug}`}>Title: {article.title} author: {article.author.name}</Link></li>                    
                     ))}
                 </ol>
             </Suspense>
