@@ -36,6 +36,7 @@ import { ActionNotionMenuExample } from "@/components/ActionMenu/Notion";
 import { NotionToolbar } from "@/components/Toolbars/NotionToolbar/NotionToolbar";
 import { toast } from "sonner";
 import { useDebouncedCallback } from "use-debounce";
+import { revalidateTag } from "next/cache";
 
 const plugins = [
   Paragraph,
@@ -163,6 +164,7 @@ function EditorChild({
               setID(data.id);
             });
             toast.success("Article created successfully");
+            revalidateTag("drafts");
           } else {
             toast.error("Error creating article");
           }
@@ -178,6 +180,7 @@ function EditorChild({
         }).then((res) => {
           if (res.ok) {
             toast.success("Article updated successfully");
+            revalidateTag("drafts");
           } else {
             toast.error("Error updating article");
           }

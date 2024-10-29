@@ -5,6 +5,7 @@ import { Settings } from "lucide-react";
 import { useState } from "react";
 import { Switch } from "../ui/switch";
 import { toast } from "sonner";
+import { revalidateTag } from "next/cache";
 
 export default function SettingsDrawer({
   docTitle,
@@ -33,6 +34,8 @@ export default function SettingsDrawer({
     }).then((res) => {
       if (res.status === 201) {
         toast.success("Saved");
+        revalidateTag("drafts");
+        revalidateTag("published");
       } else {
         toast.error("Failed to save");
         console.error("Failed to save");

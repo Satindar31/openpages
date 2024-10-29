@@ -22,7 +22,8 @@ export default async function Dashboard() {
         `/api/article/draft?userID=${userId}&orgID=${orgId}`,
       {
         next: {
-          revalidate: 0,
+          revalidate: 6000,
+          tags: ["drafts"],
         },
         method: "GET",
         headers: {
@@ -42,9 +43,9 @@ export default async function Dashboard() {
         '/api/article/published?orgID=' + orgId + '&userID=' + userId,
       {
         next: {
-          revalidate: 0,
+          revalidate: 600,
+          tags: ["published"],
         },
-        cache: "no-cache",
         headers: {
           Authorization: "Bearer " + (await auth().getToken()),
         },
