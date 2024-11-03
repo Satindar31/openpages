@@ -14,7 +14,7 @@ export default function Analytics() {
       <Script
         src={process.env.NEXT_PUBLIC_UMAMI_URL}
         data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID}
-        strategy="afterInteractive"
+        strategy="worker"
       />
     </>
   );

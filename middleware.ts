@@ -16,22 +16,36 @@ export default clerkMiddleware(
       auth().protect();
     }
 
-    const { hostname } = request.nextUrl;
+    const { hostname, pathname } = request.nextUrl;
     const baseDomain = process.env.BASE_DOMAIN ?? "localhost";
 
+    // If the URL is simple BASE_URL, allow default behavior
     if (hostname == baseDomain) {
       return NextResponse.next();
-    } else {
+    } 
+    // If not then if the URL is a subdomain like: user.openpages.blog do the following
+    else {
       if (hostname.endsWith(baseDomain)) {
-        console.log(`hostname: ${hostname}`);
+        const segments = pathname.split("/");
+        const blogId = segments[segments.length - 1];
         const subdomain = hostname.replace(`.${baseDomain}`, "");
-        console.log(`Subdomain: ${subdomain}`);
-        const blog = await findBlogByDomain(subdomain, false);
-        if (blog) {
-          console.log("blog found");
-          request.nextUrl.pathname = `/blog/${blog.id}`;
+        // Fetch the publication from the subdomain
+        const publication = await findBlogByDomain(subdomain, false);
+
+        if (publication) {
+          console.log("publication found");
+
+          // If the URL contains blogId, rewrite to the blog's dynamic route
+          if (blogId) {
+            request.nextUrl.pathname = `/blog/${publication.id}/${blogId}`;
+            return NextResponse.rewrite(request.nextUrl);
+          }
+
+          // If no blogId, rewrite to the blog's main page
+          request.nextUrl.pathname = `/blog/${publication.id}`;
           return NextResponse.rewrite(request.nextUrl);
         }
+        // Else return 404
         console.log("no blog found");
         return NextResponse.rewrite(new URL("/404", request.url));
       } else {
