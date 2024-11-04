@@ -26,6 +26,11 @@ export async function GET(req: Request) {
         id: true,
         title: true,
         updatedAt: true,
+        Publication: {
+          select: {
+            slug: true,
+          }
+        }
       },
     });
 

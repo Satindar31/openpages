@@ -45,8 +45,7 @@ export default clerkMiddleware(
           request.nextUrl.pathname = `/blog/${publication.id}`;
           return NextResponse.rewrite(request.nextUrl);
         }
-        // Else return 404
-        console.log("no blog found");
+        // Else return 404;
         return NextResponse.rewrite(new URL("/404", request.url));
       } else {
         // Handle custom domains like: example.com
@@ -58,7 +57,6 @@ export default clerkMiddleware(
         }
 
         // If no matching blog or domain, allow default behavior or return a 404
-        console.log("no blog found");
         return NextResponse.next();
       }
     }

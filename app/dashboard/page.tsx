@@ -40,7 +40,10 @@ export default async function Dashboard() {
 
     const response2 = await fetch(
       process.env.BASE_URL +
-        '/api/article/published?orgID=' + orgId + '&userID=' + userId,
+        "/api/article/published?orgID=" +
+        orgId +
+        "&userID=" +
+        userId,
       {
         next: {
           revalidate: 600,
@@ -59,22 +62,31 @@ export default async function Dashboard() {
 
     return (
       <div>
-        <h1 className="text-4xl md:text-9xl font-black">Dashboard</h1>
-        <h2 className="text-lg md:text-4xl font-bold">
-          Welcome to your dashboard
-        </h2>
-        <OrganizationSwitcher hidePersonal />
-        <Link
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          href={"/dashboard/write"}
-        >
-          New post
-        </Link>
+        <Suspense fallback={<Loading />}>
+          <h1 className="text-4xl md:text-9xl font-black">Dashboard</h1>
+          <h2 className="text-lg md:text-4xl font-bold">
+            Welcome to your dashboard
+          </h2>
+          <OrganizationSwitcher hidePersonal />
+          <Link
+            prefetch={true}
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            href={"/dashboard/write"}
+          >
+            New post
+          </Link>
+          <Link
+            prefetch={true}
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            // Figure out a better way to do this in production            
+            href={process.env.NODE_ENV === "development" ? "http://localhost:3000/blog/" + orgId : `https://${drafts[0].publication.slug}.${process.env.BASE_DOMAIN}`}
+          >
+            Visit your blog
+          </Link>
 
-        <p>drafts:</p>
+          <p>drafts:</p>
 
-        <ul>
-          <Suspense fallback={<Loading />}>
+          <ul>
             {drafts.length > 0 &&
               drafts.map(
                 (draft: { id: string; title: string; updatedAt: string }) => (
@@ -87,11 +99,9 @@ export default async function Dashboard() {
                   </li>
                 )
               )}
-          </Suspense>
-        </ul>
-        {published.length > 0 ? <p>Published:</p> : <></>}
-        <ul>
-          <Suspense fallback={<Loading />}>
+          </ul>
+          {published.length > 0 ? <p>Published:</p> : <></>}
+          <ul>
             {published.length > 0 &&
               published.map(
                 (article: {
@@ -109,8 +119,8 @@ export default async function Dashboard() {
                   </li>
                 )
               )}
-          </Suspense>
-        </ul>
+          </ul>
+        </Suspense>
       </div>
     );
   }
