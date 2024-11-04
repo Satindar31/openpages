@@ -79,7 +79,7 @@ export default async function Dashboard() {
             prefetch={true}
             className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             // Figure out a better way to do this in production            
-            href={process.env.NODE_ENV === "development" ? "http://localhost:3000/blog/" + orgId : `https://${drafts[0].publication.slug}.${process.env.BASE_DOMAIN}`}
+            href={process.env.NODE_ENV === "development" ? `${process.env.URL}/blog/${orgId}` : `https://${drafts[0].publication.slug}.${process.env.BASE_DOMAIN}`}
           >
             Visit your blog
           </Link>
