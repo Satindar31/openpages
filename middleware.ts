@@ -2,7 +2,7 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import fetchBlogFromDB from "./lib/blogs/fetchBlogFromDB";
 
-const isPublicRoute = createRouteMatcher(["/", "/api/clerk/webhooks"]);
+const isPublicRoute = createRouteMatcher(["/", "/api/clerk/webhooks", "/api/article/published/getArticle", "/blog(.*)"]);
 
 async function findBlogByDomain(domain: string, custom: boolean) {
   // Replace this with your logic to fetch blog details from your database
