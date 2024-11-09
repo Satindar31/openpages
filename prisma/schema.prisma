@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
@@ -27,9 +27,10 @@ model User {
 model Post {
   id        String   @id @default(cuid())
   title     String
-  slug     String   @unique @default(cuid())
+  slug      String   @unique @default(cuid())
+  likes     Int      @default(0)
   content   String
-  contentMD String @default("")
+  contentMD String   @default("")
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
