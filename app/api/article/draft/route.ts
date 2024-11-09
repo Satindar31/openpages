@@ -32,6 +32,9 @@ export async function GET(req: Request) {
           }
         }
       },
+      orderBy: {
+        updatedAt: "desc"
+      }
     });
 
     return new Response(JSON.stringify(drafts), { status: 200 });

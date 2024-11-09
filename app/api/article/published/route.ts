@@ -22,6 +22,10 @@ export async function GET(req: Request) {
         },
         published: true,
       },
+
+      orderBy: {
+        updatedAt: "desc",
+      }
     });
     
     return new Response(JSON.stringify(articles), { status: 200 });

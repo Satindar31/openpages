@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { Suspense } from "react";
 import Loading from "./loading";
+import VisitPublication from "@/components/dashboard/visitPublication";
 
 export default async function Dashboard() {
   const { orgId, userId } = auth();
@@ -61,7 +62,7 @@ export default async function Dashboard() {
     const published = await response2.json();
 
     return (
-      <div>
+      <div className="m-4 p-4">
         <Suspense fallback={<Loading />}>
           <h1 className="text-4xl md:text-9xl font-black">Dashboard</h1>
           <h2 className="text-lg md:text-4xl font-bold">
@@ -70,56 +71,62 @@ export default async function Dashboard() {
           <OrganizationSwitcher hidePersonal />
           <Link
             prefetch={true}
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ml-2 mr-2"
             href={"/dashboard/write"}
           >
             New post
           </Link>
-          {/* <Link
-            prefetch={true}
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            // Figure out a better way to do this in production            
-            href={process.env.NODE_ENV === "development" ? `${process.env.URL}/blog/${orgId}` : (`https://${drafts[0].publication.slug}.${process.env.BASE_DOMAIN}` || `https://openpages.us.kg/blog/${orgId}`)}
-          >
-            Visit your blog
-          </Link> */}
+          <VisitPublication orgId={orgId} />
 
-          <p>drafts:</p>
+          <div className="grid grid-cols-2">
+            <div>
+              <h3>Drafts:</h3>
+              <ul>
+                {drafts.length > 0 &&
+                  drafts.map(
+                    (draft: {
+                      id: string;
+                      title: string;
+                      updatedAt: string;
+                    }) => (
+                      <li key={draft.id}>
+                        <Link href={"/dashboard/write/" + draft.id}>
+                          <span className="font-bold">{draft.title}</span>
+                        </Link>
+                        , updated:{" "}
+                        {new Date(draft.updatedAt).toLocaleString()}
+                      </li>
+                    )
+                  )}
+                  {drafts.length === 0 && <li>No drafts</li>}
+              </ul>
+            </div>
 
-          <ul>
-            {drafts.length > 0 &&
-              drafts.map(
-                (draft: { id: string; title: string; updatedAt: string }) => (
-                  <li key={draft.id}>
-                    <Link href={"/dashboard/write/" + draft.id}>
-                      {draft.id}
-                    </Link>
-                    , title: {draft.title}, updated:{" "}
-                    {new Date(draft.updatedAt).toLocaleString()}
-                  </li>
-                )
-              )}
-          </ul>
-          {published.length > 0 ? <p>Published:</p> : <></>}
-          <ul>
-            {published.length > 0 &&
-              published.map(
-                (article: {
-                  slug: string;
-                  id: string;
-                  title: string;
-                  updatedAt: string;
-                }) => (
-                  <li key={article.id}>
-                    <Link href={`/blog/${orgId}/` + article.slug}>
-                      {article.id}
-                    </Link>
-                    , title: {article.title}, updated:{" "}
-                    {new Date(article.updatedAt).toLocaleString()}
-                  </li>
-                )
-              )}
-          </ul>
+            <div>
+              <h3>Published:</h3>
+              <ul>
+                {published.length > 0 &&
+                  published.map(
+                    (article: {
+                      slug: string;
+                      id: string;
+                      title: string;
+                      updatedAt: string;
+                    }) => (
+                      <li key={article.id}>
+                        <Link href={`/blog/${orgId}/` + article.slug}>
+                          <span className="font-bold">{article.title}</span>
+                        </Link>
+                        , updated:{" "}
+                        {new Date(article.updatedAt).toLocaleString()}
+                      </li>
+                    )
+                  )}
+
+                {published.length === 0 && <li>No published articles</li>}
+              </ul>
+            </div>
+          </div>
         </Suspense>
       </div>
     );

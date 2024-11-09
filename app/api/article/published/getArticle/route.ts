@@ -28,6 +28,7 @@ export async function GET(req: Request) {
         author: true,
         contentMD: true,
         title: true,
+        likes: true
       }
     });
 
