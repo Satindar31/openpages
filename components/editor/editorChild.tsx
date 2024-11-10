@@ -37,6 +37,7 @@ import { NotionToolbar } from "@/components/Toolbars/NotionToolbar/NotionToolbar
 import { toast } from "sonner";
 import { useDebouncedCallback } from "use-debounce";
 import { revalidateTag } from "next/cache";
+import uploadToCloudinary from "@/lib/uploadToCloudinary";
 
 const plugins = [
   Paragraph,
@@ -63,49 +64,54 @@ const plugins = [
   Code,
   Link,
   Embed,
-  //   Image.extend({
-  //     options: {
-  //       async onUpload(file) {
-  //         const data = await uploadToCloudinary(file, 'image');
-
-  //         return {
-  //           src: data.secure_url,
-  //           alt: 'cloudinary',
-  //           sizes: {
-  //             width: data.width,
-  //             height: data.height,
-  //           },
-  //         };
-  //       },
-  //     },
-  //   }),
-  //   Video.extend({
-  //     options: {
-  //       onUpload: async (file) => {
-  //         const data = await uploadToCloudinary(file, 'video');
-  //         return {
-  //           src: data.secure_url,
-  //           alt: 'cloudinary',
-  //           sizes: {
-  //             width: data.width,
-  //             height: data.height,
-  //           },
-  //         };
-  //       },
-  //       onUploadPoster: async (file) => {
-  //         const image = await uploadToCloudinary(file, 'image');
-  //         return image.secure_url;
-  //       },
-  //     },
-  //   }),
-  //   File.extend({
-  //     options: {
-  //       onUpload: async (file) => {
-  //         const response = await uploadToCloudinary(file, 'auto');
-  //         return { src: response.secure_url, format: response.format, name: response.name, size: response.bytes };
-  //       },
-  //     },
-  //   }),
+  Image.extend({
+    options: {
+      async onUpload(file) {
+        console.log("got file");
+        const data = await uploadToCloudinary(file, "image");
+        return {
+          src: data.secure_url,
+          alt: "cloudinary",
+          sizes: {
+            width: data.width,
+            height: data.height,
+          },
+        };
+      },
+    },
+  }),
+  Video.extend({
+    options: {
+      onUpload: async (file) => {
+        const data = await uploadToCloudinary(file, "video");
+        return {
+          src: data.secure_url,
+          alt: "cloudinary",
+          sizes: {
+            width: data.width,
+            height: data.height,
+          },
+        };
+      },
+      onUploadPoster: async (file) => {
+        const image = await uploadToCloudinary(file, "image");
+        return image.secure_url;
+      },
+    },
+  }),
+  File.extend({
+    options: {
+      onUpload: async (file) => {
+        const response = await uploadToCloudinary(file, "auto");
+        return {
+          src: response.url,
+          format: response.format,
+          name: response.name,
+          size: response.bytes,
+        };
+      },
+    },
+  }),
 ];
 
 const TOOLS = {

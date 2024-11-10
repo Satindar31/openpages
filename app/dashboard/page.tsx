@@ -89,7 +89,7 @@ export default async function Dashboard() {
                       title: string;
                       updatedAt: string;
                     }) => (
-                      <li key={draft.id}>
+                      <li className={"border m-1 p-1 rounded hover:shadow duration-150"} key={draft.id}>
                         <Link href={"/dashboard/write/" + draft.id}>
                           <span className="font-bold">{draft.title}</span>
                         </Link>
@@ -113,7 +113,7 @@ export default async function Dashboard() {
                       title: string;
                       updatedAt: string;
                     }) => (
-                      <li key={article.id}>
+                      <li className={"border m-1 p-1 rounded hover:shadow duration-150"} key={article.id}>
                         <Link href={`/blog/${orgId}/` + article.slug}>
                           <span className="font-bold">{article.title}</span>
                         </Link>
