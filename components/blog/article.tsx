@@ -28,7 +28,7 @@ export default function Article({
         rehypePlugins={[raw, katex, sanitize]}
         components={{
           code(props) {
-            const { children, className, node, ...rest } = props;
+            const { children, className, ...rest } = props;
             const match = /language-(\w+)/.exec(className || "");
             return match ? (
               <SyntaxHighlighter

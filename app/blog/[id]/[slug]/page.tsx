@@ -11,7 +11,7 @@ export default async function BlogAritlcePlage({ params }: { params: { slug: str
         },
         next: {
             // 10 minutes
-            revalidate: 0
+            revalidate: 600
         }
     });
     const _json = await res.json();
