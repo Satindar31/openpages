@@ -16,6 +16,7 @@
     "@neondatabase/serverless": "^0.10.1",
     "@prisma/adapter-neon": "^5.21.1",
     "@prisma/client": "^5.21.1",
+    "@radix-ui/react-hover-card": "^1.1.2",
     "@radix-ui/react-popover": "^1.1.2",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",

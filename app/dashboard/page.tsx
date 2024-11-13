@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import Loading from "./loading";
 import VisitPublication from "@/components/dashboard/visitPublication";
+import { Button } from "@react-email/components";
 
 export default async function Dashboard() {
   const { orgId, userId } = auth();
@@ -77,6 +78,12 @@ export default async function Dashboard() {
             New post
           </Link>
           <VisitPublication orgId={orgId} />
+          <Link
+          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ml-2 mr-2"
+          href={"/dashboard/settings"}
+          >
+          Settings
+          </Link>
 
           <div className="grid grid-cols-2">
             <div>
