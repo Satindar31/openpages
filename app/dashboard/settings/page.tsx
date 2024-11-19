@@ -1,8 +1,5 @@
-import SettingsForm from "@/components/dashboard/settingsForm";
-import { auth } from "@clerk/nextjs/server";
+// import SettingsForm from "@/components/dashboard/settingsForm";
 
-export default function SettingsPage() {
-  const { orgId } = auth();
-
-  return <SettingsForm orgId={orgId!} />;
-}
+// export default function SettingsPage() {
+//   return ;
+// }
