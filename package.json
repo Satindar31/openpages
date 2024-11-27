@@ -68,7 +68,7 @@
     "resend": "4.0.1-alpha.0",
     "sass": "^1.80.3",
     "slate": "^0.110.2",
-    "slate-react": "^0.110.2",
+    "slate-react": "^0.111.0",
     "sonner": "^1.5.0",
     "svix": "^1.37.0",
     "tailwind-merge": "^2.5.3",
